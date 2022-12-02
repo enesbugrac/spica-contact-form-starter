@@ -1,24 +1,68 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+
+import "./App.css";
 
 function App() {
+  const [contactForm, setcontactForm] = useState<{
+    name: string;
+    subject: string;
+    email: string;
+    message: string;
+  }>({ name: "", subject: "", email: "", message: "" });
+  const handleChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setcontactForm({ ...contactForm, [e.target.name]: e.target.value });
+  };
+  const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={"App"}>
+      <h1>CONTACT FORM WITH SPICA FUNCTIONS</h1>
+      <form onSubmit={handleSubmitForm} className={"contact-form"}>
+        <h2 className="contact-form-header">Contact Form</h2>
+        <div className="contact-form-inputs">
+          <input
+            value={contactForm.email}
+            onChange={handleChangeForm}
+            className="contact-input"
+            placeholder="Enter Email..."
+            type="email"
+            required
+            name="email"
+          />
+          <input
+            className="contact-input"
+            placeholder="Enter Name..."
+            type="text"
+            value={contactForm.name}
+            onChange={handleChangeForm}
+            name="name"
+            required
+          />
+          <input
+            className="contact-input"
+            placeholder="Enter Subject..."
+            type="text"
+            value={contactForm.subject}
+            onChange={handleChangeForm}
+            name="subject"
+          />
+          <textarea
+            className="contact-text-area"
+            placeholder="Enter Message..."
+            name="message"
+            value={contactForm.message}
+            onChange={(e) =>
+              setcontactForm({ ...contactForm, message: e.target.value })
+            }
+            required
+          />
+        </div>
+        <button className="submit-button" type="submit">
+          Submit
+        </button>
+      </form>
+      <div className={"operation-container"}></div>
     </div>
   );
 }
